@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+        <div class="pt-3 pr-5 pl-5 pb-0 border-bottom border-dark">
+                <a href="/logout" class="text-right float-right">Log Out</a>
+                <br>
+                <a href="/book" class="text-right float-right">Books Page</a>
+            <br>
+                <a href="/fav_books" class="text-right float-right">Fav Books</a>
+                
+                <h1 class="diplay-4"> Welcome, {{this_user.first_name}} </h1>
+        
+            </div>
+        <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">THe books faved by {{this_user.first_name}}</th>
+        
+                  </tr>
+                </thead>
+                <tbody>
+                    {%for user in users%}
+                  <tr>
+                    <td>{{user.title}}</td>
+{%endfor%}
+                  </tr>
+                  <tr>
+
+                </tbody>
+              </table>
+</body>
+</html>

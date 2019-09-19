@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="pt-3 pr-5 pl-5 pb-0 border-bottom border-dark">
+        <a href="/logout" class="text-right float-right">Log Out</a>
+        <br>
+        <a href="/book" class="text-right float-right">Books Page</a>
+    <br>
+        <a href="/fav_books" class="text-right float-right">Fav Books</a>
+        
+        <h1 class="diplay-4"> Welcome, {{users_header.first_name}} </h1>
+
+    </div>
+    <div class="p-5">
+        <div class="row p-5">
+
+
+            <div class="col-md-5 mb-5">
+                <div class="border-dark">
+
+                            {% if book.uploaded_by.id == users_header.id %}
+                                        <form action="/editbook" method="POST">
+
+                                        {% csrf_token %}
+                                                <div class="form-group">
+                                                <label for="exampleFormControlInput1">Title:</label>
+                                                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder=" {{book.title}}"
+                                                    name="titleName">
+                                                </div>
+
+                                        <h4> Added by: {{book.uploaded_by.first_name}} {{book.uploaded_by.last_name}}</h4>
+                                        <hr>
+                                        <h4> Added on: {{book.created_at}}</h4>
+                                        <h4> Last updated on: {{book.updated_at}}</h4>
+
+                                                <div class="form-group">
+                                                <label for="exampleFormControlTextarea1">Description</label>
+                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                                name="descriptionName" placeholder=" {{book.desc}}"></textarea>
+                                                </div>
+
+                                        <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                        
+
+                                    </div>
+    </form>
+        <form action='/delete/{{book.id}}' method="POST">
+            {% csrf_token %}
+                <input class="btn btn-danger float-right" type="submit" value="Delete">
+                <input type="hidden" name="commentingid"value={{book.id}}>
+        </form>
+                            {% else %}
+                                        <h1>{{book.title}}</h1>
+                                        
+                                        <hr>
+                                        <h4> Added by: {{book.uploaded_by.first_name}} {{book.uploaded_by.last_name}}</h4>
+                                        <hr>
+                                        <h4> Added on: {{book.created_at}}</h4>
+                                        <h4> Last updated on: {{book.updated_at}}</h4>
+                                        <h4>Description: </h4>
+                                        <p>{{book.desc}}</p>
+                                        <hr>
+                                    </div>
+                            {% endif %}
+                      
+            </div>
+
+            <div class="col-md-3 mb-5">
+            </div>
+
+            <div class="col-md-4 mb-5">
+                <h3>Users who like this book</h3>
+
+                <ul class="">
+                    {% for users in users_fav%}
+                    <li class="">{{users.first_name}} {{users.last_name}}</li>
+                </ul>
+                <hr>
+
+                {% endfor %}
+
+           
+                <a href="favorite/{{book.id}}">Like</a>
+    {% for user in users_fav %}
+    {% if user.id == request.session.userid %} 
+
+                <a href="unfavorite/{{book.id}}">Unlike</a>
+                
+                {% endif%}
+                {%endfor%}
+            </div>
+        </div>
+    </div>
+
+    </div>
+    </div>
+</body>
+
+</html>
